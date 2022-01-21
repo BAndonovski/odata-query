@@ -552,7 +552,8 @@ function buildUrl(path: string, params: PlainObject): string {
   const queries: string[] = Object.getOwnPropertyNames(params)
     .filter(key => params[key] !== undefined && params[key] !== '')
     .map(key => `${key}=${params[key]}`);
-  return queries.length ? `${path}?${queries.join('&')}` : path;
+  let div = path.includes("?") ? "&" : "?"
+  return queries.length ? `${path}${div}${queries.join('&')}` : path;
 }
 
 function parseNot(builtFilters: string[]): string {
