@@ -280,9 +280,7 @@ function buildFilter(filters: Filter = {}, aliases: Alias[] = [], propPrefix = '
                       value: typedValue,
                     }));
 
-                  result.push(
-                    propName + ' in (' + resultingValues.map((v: any) => handleValue(v, aliases)).join(',') + ')'
-                  );
+                  result.push('(' + resultingValues.map(function (v: any) { return propName + ' eq ' + handleValue(v);}).join(' or ') + ')');
                 } else if (BOOLEAN_FUNCTIONS.indexOf(op) !== -1) {
                   // Simple boolean functions (startswith, endswith, contains)
                   result.push(`${op}(${propName},${handleValue(value[op], aliases)})`);
