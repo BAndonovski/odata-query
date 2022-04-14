@@ -894,7 +894,17 @@ describe('filter', () => {
       const expected = "?$filter=someProp eq binary'YmluYXJ5RGF0YQ=='";
       const actual = buildQuery({ filter });
       expect(actual).toEqual(expected);
-    });
+    });    
+
+    it('should handle custom type', () => {
+      const filter = {
+        TransportOrder: {eq: {
+            type: "Microsoft.Dynamics.DataEntities.NoYes", value: 'Yes',
+          },},}
+      const expected = "?$filter=TransportOrder eq Microsoft.Dynamics.DataEntities.NoYes'Yes'"
+      const actual = buildQuery({ filter });
+      expect(actual).toEqual(expected);
+    })
   });
 
   describe('functions', () => {

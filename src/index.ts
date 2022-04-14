@@ -387,9 +387,13 @@ function handleValue(value: Value, aliases?: Alias[]): any {
       case 'decimal':
         return `${value.value}M`;
       default:
-        return Object.entries(value)
-            .filter(([, v]) => v !== undefined)
-            .map(([k, v]) => `${k}=${handleValue(v as Value, aliases)}`).join(',');
+        if ("type" in value && "value" in value) {
+          return `${value["type"]}'${value["value"]}'`;
+        } else {
+          return Object.entries(value)
+          .filter(([, v]) => v !== undefined)
+          .map(([k, v]) => `${k}=${handleValue(v as Value, aliases)}`).join(',');
+      }
     }
   }
   return value;
